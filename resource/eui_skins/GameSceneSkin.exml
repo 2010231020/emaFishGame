@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin class="GameSceneSkin" width="400" height="400" xmlns:e="http://ns.egret.com/eui" xmlns:ns1="*" xmlns:w="http://ns.egret.com/wing">
+	<ns1:Body5 width="400" height="400" skinName="Body5Skin" anchorOffsetX="209" anchorOffsetY="288" x="209" y="288" visible="false"/>
+	<ns1:Fish width="400" height="400" skinName="Body" visible="false"/>
+	<ns1:Body3 width="400" height="400" x="212" y="173" skinName="Body3Skin" anchorOffsetX="212" anchorOffsetY="173" visible="false"/>
+	<ns1:Body4 width="400" height="400" x="112" y="163" skinName="Body4Skin" anchorOffsetX="112" anchorOffsetY="163" visible="false"/>
+	<ns1:Body6 width="400" height="400" x="211" y="154" skinName="Body6Skin" anchorOffsetX="211" anchorOffsetY="154" visible="false"/>
+	<ns1:Body2 width="400" height="400" x="137" y="112" skinName="Body2Skin" anchorOffsetX="137" anchorOffsetY="112" visible="false"/>
+	<ns1:Body7 width="400" height="400" x="291" y="112" skinName="Body7Skin" anchorOffsetX="291" anchorOffsetY="112" visible="false"/>
+	<ns1:Body8 width="400" height="400" x="310" y="168" skinName="Body8Skin" anchorOffsetX="310" anchorOffsetY="168" visible="false"/>
+</e:Skin>
