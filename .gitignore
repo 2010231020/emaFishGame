@@ -9,3 +9,4 @@
 !tsconfig.json
 !wingProperties.json
 !.wing
+!/promise
