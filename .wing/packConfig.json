@@ -1,0 +1,10 @@
+{
+    "useClip": false,
+    "maxImageWidth": 2048,
+    "maxImageHeight": 2048,
+    "defaultResPath": "c:\\Users\\B-04\\Documents\\EgretProjects\\emaFish\\resource\\default.res.json",
+    "packGroups": {
+        "preload": true,
+        "decorate": true
+    }
+}
