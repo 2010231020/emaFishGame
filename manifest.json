@@ -10,14 +10,14 @@
 		"promise/bin/promise.js"
 	],
 	"game": [
+		"bin-debug/Body8.js",
 		"bin-debug/AssetAdapter.js",
-		"bin-debug/Body2.js",
 		"bin-debug/Body3.js",
 		"bin-debug/Body4.js",
 		"bin-debug/Body5.js",
 		"bin-debug/Body6.js",
 		"bin-debug/Body7.js",
-		"bin-debug/Body8.js",
+		"bin-debug/Body2.js",
 		"bin-debug/Fish.js",
 		"bin-debug/GameScene.js",
 		"bin-debug/LoadingUI.js",

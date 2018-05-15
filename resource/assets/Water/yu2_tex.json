@@ -1,1 +1,64 @@
-{"width":256,"SubTexture":[{"width":43,"y":72,"height":38,"name":"FB_Body_1/图层_6","x":104},{"width":101,"y":1,"height":114,"name":"FB_Body_1/图层_0","x":1},{"width":26,"y":72,"height":29,"name":"FB_Body_1/图层_1","x":205},{"width":26,"y":1,"height":29,"name":"FB_Body_1/图层_2","x":183},{"width":24,"y":72,"height":42,"name":"FB_Body_1/图层_3","x":179},{"width":28,"y":72,"height":40,"name":"FB_Body_1/图层_4","x":149},{"width":77,"y":1,"height":69,"name":"FB_Body_1/图层_5","x":104},{"width":22,"y":32,"height":34,"name":"FB_Body_1/图层_7","x":183}],"height":128,"name":"yu2","imagePath":"yu2_tex.png"}
+{
+    "width": 256,
+    "SubTexture": [
+        {
+            "width": 43,
+            "y": 72,
+            "height": 38,
+            "name": "FB_Body_1/图层_6",
+            "x": 104
+        },
+        {
+            "width": 101,
+            "y": 1,
+            "height": 114,
+            "name": "FB_Body_1/图层_0",
+            "x": 1
+        },
+        {
+            "width": 26,
+            "y": 72,
+            "height": 29,
+            "name": "FB_Body_1/图层_1",
+            "x": 205
+        },
+        {
+            "width": 26,
+            "y": 1,
+            "height": 29,
+            "name": "FB_Body_1/图层_2",
+            "x": 183
+        },
+        {
+            "width": 24,
+            "y": 74,
+            "height": 42,
+            "name": "FB_Body_1/图层_3",
+            "x": 179
+        },
+        {
+            "width": 28,
+            "y": 74,
+            "height": 40,
+            "name": "FB_Body_1/图层_4",
+            "x": 149
+        },
+        {
+            "width": 77,
+            "y": 1,
+            "height": 69,
+            "name": "FB_Body_1/图层_5",
+            "x": 104
+        },
+        {
+            "width": 22,
+            "y": 32,
+            "height": 34,
+            "name": "FB_Body_1/图层_7",
+            "x": 183
+        }
+    ],
+    "height": 128,
+    "name": "yu2",
+    "imagePath": "yu2_tex.png"
+}

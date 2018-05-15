@@ -1,0 +1,18 @@
+{
+  "production": {
+    "emaCat": "http://116.228.88.149:8080/emaCat",
+    "imgHost": "http://picture.lemonade-game.com/fish/sprite",
+    "fishWebServer": "http://emafish.lemonade-game.com"
+  },
+  "test": {
+    "emaCat": "http://192.168.1.12:8080/emaCat",
+    "imgHost": "http://test-picture.lemonade-game.com/fish/sprite",
+    "fishWebServer": "http://test-emafish.lemonade-game.com"
+  },
+  "dev": {
+    "emaCat": "http://192.168.1.12:8080/emaCat",
+    "imgHost": "http://test-picture.lemonade-game.com/fish/sprite",
+    "fishWebServer": "http://cober2.com:1234"
+  },
+  "env": "dev"
+}

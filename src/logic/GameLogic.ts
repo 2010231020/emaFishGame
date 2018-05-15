@@ -22,24 +22,12 @@ class GameLogic {
     public paren: any;
     public duckweedId: number;
     private dec1: egret.Bitmap;
-    public static env = 'dev';
-    // public static env = 'test';
-    // public static env = 'production';
-    // public static gameServer = 'http://192.168.11.2:8080';
     public gameServer: string;
     public fishWebServer: string;
     public init(): void {
-        if (GameLogic.env === 'dev') {
-            GameLogic.getInstance().gameServer = 'http://192.168.1.12:8080/emaCat';
-            GameLogic.getInstance().fishWebServer = 'http://cober2.com:1234';
-            // this.gameServer = 'http://192.168.11.2:8080';
-        } else if (GameLogic.env === 'test') {
-            GameLogic.getInstance().gameServer = 'http://192.168.1.12:8080/emaCat';
-            GameLogic.getInstance().fishWebServer = 'http://test-emafish.lemonade-game.com';
-        } else if (GameLogic.env === 'production') {
-            GameLogic.getInstance().gameServer = 'http://114.55.250.173:8080/emaCat';
-            GameLogic.getInstance().fishWebServer = 'http://test-emafish.lemonade-game.com';
-        }
+        let process_json = RES.getRes('process_json');
+        GameLogic.getInstance().gameServer = process_json[process_json["env"]]["emaCat"];
+        GameLogic.getInstance().fishWebServer = process_json[process_json["env"]]["fishWebServer"];
         this.userInformation();
         GameLogic.getInstance().bodyStep = 1000;
 
@@ -132,7 +120,7 @@ class GameLogic {
         //泡泡
         setInterval(() => {
             this.bubbleShow();//上右下左
-        }, 500);
+        }, 5000);
 
         if (len > 0) {
             //最大的鱼
@@ -187,10 +175,11 @@ class GameLogic {
 
     private bubbleShow(): void {
         var bubble = new egret.Bitmap(RES.getRes('bubble_png'));
-        bubble.width = 5;
-        bubble.height = 5;
+        var bubbleSize = 5;
+        bubble.width = bubbleSize;
+        bubble.height = bubbleSize;
         this.GameStage.addChild(bubble);
-        this.GameStage.setChildIndex(bubble, 0);
+        this.GameStage.swapChildren(bubble, this.dec1);
         var directionX = Math.ceil(Math.random() * this.GameStage_width);
         var directionY = Math.ceil(Math.random() * this.GameStage_height);
         bubble.x = (directionX - this.GameStage_width / 2) * 0.8 + this.GameStage_width / 2;
@@ -209,12 +198,12 @@ class GameLogic {
             dragonbonesFactory.addTextureAtlasData(dragonbonesFactory.parseTextureAtlasData(textureData, texture));
             let armature: dragonBones.Armature = dragonbonesFactory.buildArmature("MovieClip");
             this.GameStage.addChild(armature.getDisplay());
-            this.GameStage.setChildIndex(armature.getDisplay(), 0);
+            this.GameStage.swapChildren(armature.getDisplay(), this.dec1);
             armature.animation.play('idle', 1);//idle swim start
             armature.display.scaleX = 0.5;
             armature.display.scaleY = 0.5;
-            armature.display.x = directionX;
-            armature.display.y = directionY;
+            armature.display.x = directionX + bubbleSize * bubbleScale / 2;
+            armature.display.y = directionY + bubbleSize * bubbleScale / 2;
             /**  
              * 开启大时钟这步很关键  
              * */
@@ -233,7 +222,7 @@ class GameLogic {
 
         this.dec1.x = 0;
         this.dec1.y = 0;
-        this.GameStage.addChild(this.dec1);
+        this.GameStage.addChildAt(this.dec1, 100);
     }
 
     private userInformation(): void {

@@ -7,6 +7,7 @@
 class GameScene extends eui.Component {
     private tw1: egret.Tween;
     private twd: egret.Tween;
+    private tws: egret.Tween;
     private zeroX: number;
     private zeroY: number;
     private step: number;
@@ -15,6 +16,7 @@ class GameScene extends eui.Component {
     private stepY: number;
     private fishId: number;
     private stepR: number;
+    private shadow: egret.Bitmap;
     private Fish: eui.Component;
     private Body2: eui.Component;
     private Body3: eui.Component;
@@ -35,45 +37,82 @@ class GameScene extends eui.Component {
     }
 
     private dragonInit(scale): void {
+        let gene = GameLogic.getInstance().gameData[this.fishId].gene;
+
         //龙骨动画
         var dragonbonesData = RES.getRes("yu2_ske_json");
         var textureData = RES.getRes("yu2_tex_json");
-        var texture = RES.getRes("yu2_tex_png");
-        this.dragonbonesFactory = new dragonBones.EgretFactory();
-        this.dragonbonesFactory.addDragonBonesData(dragonBones.DataParser.parseDragonBonesData(dragonbonesData));
-        this.dragonbonesFactory.addTextureAtlasData(this.dragonbonesFactory.parseTextureAtlasData(textureData, texture));
-        this.armature = this.dragonbonesFactory.buildArmature("Armature");
-        this.addChild(this.armature.getDisplay());
-        this.armature.animation.play('swim');//idle swim start
-        // let twd: egret.Tween = egret.Tween.get(armature.getDisplay(), { loop: true });
-        // this.armature.display.scaleX = scale * 2.5;
-        // this.armature.display.scaleY = scale * 2.5;
-        // armature.display.x = 50 * (1 + 5 * Math.random());
-        // armature.display.y = 80 * (1 + 4 * Math.random());
-        // twd.to({ x: 50 * (1 + 5 * Math.random()), y: 80 * (1 + 4 * Math.random()) }, 5000);
-        /**  
-         * 开启大时钟这步很关键  
-         * */
-        dragonBones.WorldClock.clock.add(this.armature);
+        // var texture = RES.getRes("yu7_tex_png");
+        // textureData.imagePath = Util.getImg(gene);
+        console.log(dragonbonesData);
+        console.log(textureData);
+        var rotation = 180 * (-1 + Math.random());
+        egret.ImageLoader.crossOrigin = "anonymous";
+        RES.getResByUrl(Util.getImg(gene), (texture: egret.Texture) => {
+            this.dragonbonesFactory = new dragonBones.EgretFactory();
+            this.dragonbonesFactory.addDragonBonesData(dragonBones.DataParser.parseDragonBonesData(dragonbonesData));
+            this.dragonbonesFactory.addTextureAtlasData(this.dragonbonesFactory.parseTextureAtlasData(textureData, texture));
+            this.armature = this.dragonbonesFactory.buildArmature("Armature");
+            this.x = GameLogic.getInstance().GameStage_width * Math.random();//X范围
+            this.y = GameLogic.getInstance().GameStage_height * Math.random();//y范围
+            this.armature.display.rotation = rotation;
 
-        this.x = 50 * (1 + 5 * Math.random());//X范围50-300
-        this.y = 80 * (1 + 4 * Math.random());//y范围80-400
-        this.armature.display.rotation = 180 * (-1 + Math.random());
-        this.swim();
-        // egret.Ticker.getInstance().register(function (advancedTime) {
-        //     dragonBones.WorldClock.clock.advanceTime(advancedTime / 1000);
-        // }, this);
-        this.addEventListener(egret.TouchEvent.TOUCH_TAP, event => {
-            let msg = {
-                type: GameLogic.getInstance().gameData[this.fishId].travelUid ? 2 : 1,//1:自家鱼；2:访客鱼
-                fishId: GameLogic.getInstance().gameData[this.fishId].fishId
-            };
-            GameLogic.getInstance().sendMsg('show', msg);
-        }, this);
+            this.shadow = new egret.Bitmap(RES.getRes(`shadow_png`));
+            this.addChild(this.shadow);
+            this.shadow.width = 400 * scale;
+            this.shadow.height = 400 * scale;
+            this.shadow.anchorOffsetX = 200 * scale;
+            this.shadow.anchorOffsetY = 200 * scale;
+
+            this.shadow.x = 100 * scale;
+            this.shadow.y = 100 * scale;
+            this.shadow.rotation = rotation;
+
+            // let sky = this.createBitmapByName("bg_jpg");
+            // this.addChild(sky);
+            // let stageW = this.stage.stageWidth;
+            // let stageH = this.stage.stageHeight;
+            // sky.width = stageW;
+            // sky.height = stageH;
+
+            this.addChild(this.armature.getDisplay());
+
+            // let textField = new egret.TextField();
+            // this.addChild(textField);
+            // textField.x = 0;
+            // textField.width = 400 * scale;
+            // textField.height = 100;
+            // textField.textColor = 0xff0000;
+            // textField.text = "访客";
+            // textField.textAlign = "center";
+            // textField.size = 12;
+
+            this.armature.animation.play('swim');//idle swim start
+            // let twd: egret.Tween = egret.Tween.get(armature.getDisplay(), { loop: true });
+            this.armature.display.scaleX = scale * 2.5;
+            this.armature.display.scaleY = scale * 2.5;
+            /**  
+             * 开启大时钟这步很关键  
+             * */
+            dragonBones.WorldClock.clock.add(this.armature);
+            this.swim();
+            // egret.Ticker.getInstance().register(function (advancedTime) {
+            //     dragonBones.WorldClock.clock.advanceTime(advancedTime / 1000);
+            // }, this);
+            this.addEventListener(egret.TouchEvent.TOUCH_TAP, event => {
+                let msg = {
+                    type: GameLogic.getInstance().gameData[this.fishId].travelUid ? 2 : 1,//1:自家鱼；2:访客鱼
+                    fishId: GameLogic.getInstance().gameData[this.fishId].fishId
+                };
+                GameLogic.getInstance().sendMsg('show', msg);
+            }, this);
+        }, this, RES.ResourceItem.TYPE_IMAGE);
+
+
     }
 
     private init(scale): void {
-        let gene = GameLogic.getInstance().gameData[this.fishId].gene.split(',');
+        let gene = GameLogic.getInstance().gameData[this.fishId].gene;
         this.x = 50 * (1 + 5 * Math.random());//X范围50-300
         this.y = 80 * (1 + 4 * Math.random());//y范围80-400
         // this.scaleX = scale;
@@ -148,13 +187,14 @@ class GameScene extends eui.Component {
         this.step = 3 * (2500 + 2500 * Math.random());//游到目标位置所用时间
         var oldX = this.stepX || this.x;
         var oldY = this.stepY || this.y;
-        this.stepX = 50 * (1 + 5 * Math.random());//X范围50-300
-        this.stepY = 80 * (1 + 4 * Math.random());//y范围80-400
+        this.stepX = GameLogic.getInstance().GameStage_width * Math.random();//X范围50-300
+        this.stepY = GameLogic.getInstance().GameStage_height * Math.random();//y范围80-400
         this.waitStep = 3000 * (1 + Math.random());//原地等待时间
         this.a = this.angle(this.stepX - oldX, this.stepY - oldY);
         this.stepR = 5000 * (1 + 3 * Math.random());//旋转所用时间
         this.tw1 = egret.Tween.get(this);
         this.twd = egret.Tween.get(this.armature.getDisplay());
+        this.tws = egret.Tween.get(this.shadow);
         // armature.display.scaleX = 0.5;
         // armature.display.scaleY = 0.5;
         // armature.display.x = 50 * (1 + 5 * Math.random());
@@ -166,6 +206,7 @@ class GameScene extends eui.Component {
         this.twd.to({ rotation: this.a }, this.stepR).call(() => {
             // this.armature.animation.play('swim');//idle swim start
         });
+        this.tws.to({ rotation: this.a }, this.stepR);
         // var a = this.angle(1, 1);
         // .to({ x: zeroX, y: zeroY - 2 * stepY }, step)
         // .to({ x: zeroX + stepX, y: zeroY - 3 * stepY }, step)
