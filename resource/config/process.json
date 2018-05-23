@@ -1,8 +1,8 @@
 {
   "production": {
-    "emaCat": "http://116.228.88.149:8080/emaCat",
-    "imgHost": "http://picture.lemonade-game.com/fish/sprite",
-    "fishWebServer": "http://emafish.lemonade-game.com"
+    "emaCat": "https://platform.emagames.cn/emaCat",
+    "imgHost": "https://picture.emagames.cn/fish/sprite",
+    "fishWebServer": "https://emafish.emagames.cn"
   },
   "test": {
     "emaCat": "http://192.168.1.12:8080/emaCat",

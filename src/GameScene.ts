@@ -77,15 +77,22 @@ class GameScene extends eui.Component {
 
             this.addChild(this.armature.getDisplay());
 
-            // let textField = new egret.TextField();
-            // this.addChild(textField);
-            // textField.x = 0;
-            // textField.width = 400 * scale;
-            // textField.height = 100;
-            // textField.textColor = 0xff0000;
-            // textField.text = "访客";
-            // textField.textAlign = "center";
-            // textField.size = 12;
+            console.log('fish', GameLogic.getInstance().gameData[this.fishId]);
+            if (GameLogic.getInstance().gameData[this.fishId].noteFlag) {
+                let textField = new egret.TextField();
+                this.addChild(textField);
+                textField.x = 0;
+                textField.width = 400 * scale;
+                textField.height = 100;
+                textField.textColor = 0xff0000;
+                textField.text = "访客";
+                textField.textAlign = "center";
+                textField.size = 12;
+                console.log('textField', textField.visible);
+                setInterval(() => {
+                    textField.visible = !textField.visible;
+                }, 3000);
+            }
 
             this.armature.animation.play('swim');//idle swim start
             // let twd: egret.Tween = egret.Tween.get(armature.getDisplay(), { loop: true });

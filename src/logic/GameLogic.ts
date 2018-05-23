@@ -22,6 +22,7 @@ class GameLogic {
     public paren: any;
     public duckweedId: number;
     private dec1: egret.Bitmap;
+    private armature: dragonBones.Armature;
     public gameServer: string;
     public fishWebServer: string;
     public init(): void {
@@ -89,9 +90,13 @@ class GameLogic {
         let currentIndex = 0;
         //req ajax data
         let len = this.gameData.length > 5 ? 5 : this.gameData.length;
+        let randNum = Math.floor(len * Math.random());
         if (len > 0) {
             for (let i = 0; i < len; i++) {
                 let thisNum = this.clc(this.gameData[i].rarity);
+                if (i === randNum) {
+                    this.gameData[i].noteFlag = true;
+                }
                 if (thisNum > maxNum) {
                     maxNum = thisNum;
                     currentIndex = i;
@@ -118,6 +123,21 @@ class GameLogic {
 
 
         //泡泡
+
+        let dragonbonesData = RES.getRes("lianyi_ske_json");
+        let textureData = RES.getRes("lianyi_tex_json");
+        let texture = RES.getRes("lianyi_tex_png");
+        let dragonbonesFactory: dragonBones.EgretFactory = new dragonBones.EgretFactory();
+        dragonbonesFactory.addDragonBonesData(dragonBones.DataParser.parseDragonBonesData(dragonbonesData));
+        dragonbonesFactory.addTextureAtlasData(dragonbonesFactory.parseTextureAtlasData(textureData, texture));
+        this.armature = dragonbonesFactory.buildArmature("MovieClip");
+        this.GameStage.addChild(this.armature.getDisplay());
+        // this.GameStage.swapChildren(this.armature.getDisplay(), this.dec1);
+        /**  
+         * 开启大时钟这步很关键  
+         * */
+        dragonBones.WorldClock.clock.add(this.armature);
+
         setInterval(() => {
             this.bubbleShow();//上右下左
         }, 5000);
@@ -190,24 +210,11 @@ class GameLogic {
         tw1 = egret.Tween.get(bubble);
         tw1.to({ x: directionX, y: directionY, scaleX: bubbleScale, scaleY: bubbleScale }, step).call(() => {
             this.GameStage.removeChild(bubble);
-            let dragonbonesData = RES.getRes("lianyi_ske_json");
-            let textureData = RES.getRes("lianyi_tex_json");
-            let texture = RES.getRes("lianyi_tex_png");
-            let dragonbonesFactory: dragonBones.EgretFactory = new dragonBones.EgretFactory();
-            dragonbonesFactory.addDragonBonesData(dragonBones.DataParser.parseDragonBonesData(dragonbonesData));
-            dragonbonesFactory.addTextureAtlasData(dragonbonesFactory.parseTextureAtlasData(textureData, texture));
-            let armature: dragonBones.Armature = dragonbonesFactory.buildArmature("MovieClip");
-            this.GameStage.addChild(armature.getDisplay());
-            this.GameStage.swapChildren(armature.getDisplay(), this.dec1);
-            armature.animation.play('idle', 1);//idle swim start
-            armature.display.scaleX = 0.5;
-            armature.display.scaleY = 0.5;
-            armature.display.x = directionX + bubbleSize * bubbleScale / 2;
-            armature.display.y = directionY + bubbleSize * bubbleScale / 2;
-            /**  
-             * 开启大时钟这步很关键  
-             * */
-            dragonBones.WorldClock.clock.add(armature);
+            this.armature.animation.play('idle', 1);//idle swim start
+            this.armature.display.scaleX = 0.5;
+            this.armature.display.scaleY = 0.5;
+            this.armature.display.x = directionX + bubbleSize * bubbleScale / 2;
+            this.armature.display.y = directionY + bubbleSize * bubbleScale / 2;
         });//鱼动画
     }
 
